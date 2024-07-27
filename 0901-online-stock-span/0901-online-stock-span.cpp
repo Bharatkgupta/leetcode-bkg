@@ -1,5 +1,5 @@
 class StockSpanner {
-    stack<pair<int,int>> priceMem;
+    vector<pair<int,int>> priceMem;
 public:
     StockSpanner() {
         
@@ -7,15 +7,11 @@ public:
     
     int next(int price) {
         int span = 1;
-        while(!priceMem.empty()) {
-            if(priceMem.top().first <= price) {
-                span += priceMem.top().second;
-                priceMem.pop();
-            } else {
-                break;
-            }
+        while(!priceMem.empty() && priceMem.back().first <= price) {
+            span += priceMem.back().second;
+            priceMem.pop_back();
         }
-        priceMem.push({price, span});
+        priceMem.push_back({price, span});
         return span;
     }
 };
