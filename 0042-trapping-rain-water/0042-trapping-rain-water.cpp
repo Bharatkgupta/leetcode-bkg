@@ -10,7 +10,6 @@ public:
                 prevLargest.pop();
                 while(!prevLargest.empty() && height[prevLargest.top()] <= height[i]) {
                     water += (height[prevLargest.top()]-lowest) * (i-prevLargest.top()-1);
-                    cout<<prevLargest.top()<<" "<<i<<" "<<water<<endl;
                     lowest = height[prevLargest.top()];
                     prevLargest.pop();
                 }
