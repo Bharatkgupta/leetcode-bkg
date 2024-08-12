@@ -8,20 +8,11 @@ public:
         if(dp[i][prev1][prev2] != -1) {
             return dp[i][prev1][prev2];
         }
-        int s=prev1, e=nums[i];
-        while(s<e) {
-            int m = s + (e-s)/2;
-            if(nums[i] - m > prev2) {
-                s = m+1;
-            } else if(nums[i] - m < prev2) {
-                e = m-1;
-            } else {
-                s = e = m;
-            }
-        }
         int count = 0;
-        for(int d=s;d<=nums[i];d++) {
-            count = (count+CP(nums, i+1, d, nums[i]-d, dp))%mod;
+        for(int d=prev1;d<=nums[i];d++) {
+            if(nums[i]-d <= prev2) {
+                count = (count+CP(nums, i+1, d, nums[i]-d, dp))%mod;
+            }
         }
         return dp[i][prev1][prev2] = count;
     }
