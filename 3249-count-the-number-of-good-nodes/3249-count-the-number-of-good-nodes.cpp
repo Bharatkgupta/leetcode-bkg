@@ -2,23 +2,27 @@ class Solution {
 public:
     int numNodes(int currNode, vector<vector<int>>& adj, vector<bool>& visited, int& goodNodes) {
         visited[currNode] = true;
-        int childNodes = -1;
-        int sum = 0;
-        bool flag = true;
+        vector<int> childNodes;
         for(const int& nextNode : adj[currNode]) {
             if(!visited[nextNode]) {
-                if(childNodes == -1) {
-                    childNodes = numNodes(nextNode, adj, visited, goodNodes);
-                    sum += childNodes;
-                } else {
-                    int newChildNodes = numNodes(nextNode, adj, visited, goodNodes);
-                    sum += newChildNodes;
-                    flag = flag && childNodes == newChildNodes;
-                }
+                childNodes.push_back(numNodes(nextNode, adj, visited, goodNodes));
             }
         }
-        if(flag) {
+        int sum = 0;
+        if(childNodes.empty()) {
             goodNodes++;
+        } else {
+            int val = childNodes[0];
+            bool flag = true;
+            for(int i=0;i<childNodes.size();i++) {
+                sum += childNodes[i];
+                if(val != childNodes[i]) {
+                    flag = false;
+                }
+            }
+            if(flag) {
+                goodNodes++;
+            }
         }
         return 1 + sum;
     }
