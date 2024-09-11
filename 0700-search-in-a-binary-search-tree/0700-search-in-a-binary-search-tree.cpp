@@ -15,8 +15,12 @@ public:
         if(root == nullptr || root->val == val) {
             return root;
         }
-        TreeNode* left = searchBST(root->left, val);
-        TreeNode* right = searchBST(root->right, val);
-        return left ? left : right;
+        if(val < root->val) {
+            return searchBST(root->left, val);
+        }
+        if(val > root->val) {
+            return searchBST(root->right, val);
+        }
+        return nullptr;
     }
 };
