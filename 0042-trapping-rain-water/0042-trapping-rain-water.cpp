@@ -1,25 +1,19 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        stack<int> prevLargest;
-        int trappedWater = 0, n = height.size();
+        stack<int> prevH;
+        int water = 0, n = height.size();
         for(int i=0;i<n;i++) {
-            int water = 0;
-            if(!prevLargest.empty() && height[prevLargest.top()] < height[i]) {
-                int lowest = height[prevLargest.top()];
-                prevLargest.pop();
-                while(!prevLargest.empty() && height[prevLargest.top()] <= height[i]) {
-                    water += (height[prevLargest.top()]-lowest) * (i-prevLargest.top()-1);
-                    lowest = height[prevLargest.top()];
-                    prevLargest.pop();
+            while(!prevH.empty() && height[prevH.top()] <= height[i]) {
+                int low = height[prevH.top()];
+                prevH.pop();
+                if(!prevH.empty()) {
+                    water += (min(height[prevH.top()], height[i])-low)*(i-prevH.top()-1);
                 }
-                if(!prevLargest.empty()) {
-                    water += (height[i]-lowest) * (i-prevLargest.top()-1);
-                }
+                // cout<<water<<" ";
             }
-            prevLargest.push(i);
-            trappedWater += water;
+            prevH.push(i);
         }
-        return trappedWater;
+        return water;
     }
 };
