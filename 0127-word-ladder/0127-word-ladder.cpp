@@ -52,14 +52,12 @@ public:
             for(int i=0;i<len;i++) {
                 string curr = q.front();
                 q.pop();
-                cout<<curr<<" - ";
                 
                 for(int j=0;j<sl;j++) {
                     for(char c='a';c<='z';c++) {
                         char temp = curr[j];
                         curr[j] = c;
                         if(temp != c && trie.find(curr)) {
-                            cout<<curr<<" ";
                             q.push(curr);
                             if(curr == endWord) {
                                 found=true;
@@ -72,7 +70,6 @@ public:
                         break;
                     }
                 }
-                cout<<endl;
                 if(found) {
                     break;
                 }
