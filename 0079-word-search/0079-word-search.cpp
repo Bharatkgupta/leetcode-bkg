@@ -24,13 +24,9 @@ public:
         if(m*n < word.size()) {
             return false;
         }
-        string rword = string(word.rbegin(), word.rend());
         for(int r=0;r<m;r++) {
             for(int c=0;c<n;c++) {
                 if(board[r][c] == word[0] && isPresent(board, word, r, c, 0)) {
-                    return true;
-                }
-                if(board[r][c] == rword[0] && isPresent(board, rword, r, c, 0)) {
                     return true;
                 }
             }
