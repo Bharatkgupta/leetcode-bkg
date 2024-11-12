@@ -1,24 +1,24 @@
 class Solution {
-    int dBalloons(vector<int>& nums, int s, int e, vector<vector<int>>& dp) {
-        if(s>e) {
+    int calculateCoins(vector<int>& nums, int l, int r, vector<vector<int>>& dp) {
+        if(l>r) {
             return 0;
         }
-        if(dp[s][e] != -1) {
-            return dp[s][e];
+        if(dp[l][r] != -1) {
+            return dp[l][r];
         }
-        int mx = 0;
-        for(int m=s;m<=e;m++) {
-            int left = dBalloons(nums,s,m-1,dp);
-            int right = dBalloons(nums,m+1,e,dp);
-            int center = (s-1>=0?nums[s-1]:1) * nums[m] * (e+1<nums.size()?nums[e+1]:1);
-            mx = max(mx,left+right+center);
+        int mxCoins = 0;
+        for(int i=l;i<=r;i++) {
+            int leftCoins = calculateCoins(nums, l, i-1, dp);
+            int rightCoins = calculateCoins(nums, i+1, r, dp);
+            int midCoins = nums[i]*(l==0 ? 1 : nums[l-1])*(r==nums.size()-1 ? 1 : nums[r+1]);
+            mxCoins = max(mxCoins, leftCoins+rightCoins+midCoins);
         }
-        return dp[s][e] = mx;
+        return dp[l][r] = mxCoins;
     }
 public:
     int maxCoins(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> dp(n, vector<int> (n,-1));
-        return dBalloons(nums, 0, n-1, dp);
+        vector<vector<int>> dp(n, vector<int> (n, -1));
+        return calculateCoins(nums, 0, n-1, dp);
     }
 };
