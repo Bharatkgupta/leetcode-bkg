@@ -1,16 +1,16 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size(), ans = 1;
-        vector<int> dp(n, 1);
-        for(int i=1;i<n;i++) {
-            for(int j=i-1;j>=0;j--) {
-                if(nums[i] > nums[j]) {
-                    dp[i] = max(dp[i], dp[j]+1);
-                }
+        vector<int> lis;
+        for(const int& num : nums) {
+            if(lis.empty() || (!lis.empty() && num > lis.back())) {
+                lis.push_back(num);
+            } else {
+                int idx = lower_bound(lis.begin(), lis.end(), num) - lis.begin();
+                lis[idx] = num;
             }
-            ans = max(ans, dp[i]);
         }
-        return ans;
+        return lis.size();
     }
 };
+
